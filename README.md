@@ -30,7 +30,7 @@ Marque os itens conforme for avançando nas semanas:
 
 - [x] Fase 1: Setup e Banco de Dados - Banco criado no Neon, schema definido, migrations rodando e dados de seed visíveis no Prisma Studio.
 - [x] Fase 2: API REST - Todos os endpoints (GET, POST, PATCH, DELETE) funcionando e testados via Thunder Client ou Insomnia.
-- [ ] Fase 3: Autenticação - Login com Google funcionando; usuário só acessa as próprias tarefas.
+- [x] Fase 3: Autenticação - Login com Google funcionando; usuário só acessa as próprias tarefas.
 - [ ] Fase 4: Frontend - Dashboard completo, responsivo e funcionando com dados reais do banco.
 - [ ] Fase 5: Qualidade e Deploy - Aplicação publicada na Vercel com URL pública, código formatado, 1 teste de integração e README documentado.
 
