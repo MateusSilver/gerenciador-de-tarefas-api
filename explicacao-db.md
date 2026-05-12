@@ -182,6 +182,48 @@ tasks     Task[]
 
 ---
 
-Tendo dissecado a linguagem, o arquivo que você montou está estruturalmente perfeito e pronto para o ambiente de produção.
+## 5.Campos Únicos
 
-Podemos ir em frente e rodar o `npx prisma migrate dev --name init` no terminal para mandar essas tabelas lá para o Neon?
+O `@@unique` é uma **Restrição de Unicidade** (Unique Constraint) a nível de tabela no banco de dados. Ele serve para garantir que **a combinação de duas ou mais colunas nunca se repita** em toda a tabela.
+
+Para ficar bem fácil de entender, vamos comparar as duas formas de unicidade que você tem no seu `schema.prisma`: o `@unique` (com um arroba) e o `@@unique` (com dois arrobas).
+
+### 1. Um arroba só: `@unique` (Para um campo único)
+
+Lá na sua tabela `User`, você tem a linha:
+
+```prisma
+email  String?  @unique
+
+```
+
+Isso significa: _"O banco de dados não pode, em hipótese alguma, aceitar dois usuários com o mesmo e-mail."_ Se o João se cadastrar com `joao@gmail.com` e a Maria tentar usar o mesmo e-mail, o Prisma bloqueia com erro.
+
+### 2. Dois arrobas: `@@unique` (Para uma combinação única)
+
+O `@@unique` é colocado no final do modelo (por isso chamamos de atributo de bloco) e recebe um array (lista) de campos.
+
+Olhe para o modelo `Account` que acabamos de adicionar para o NextAuth:
+
+```prisma
+model Account {
+  // ... vários campos ...
+  provider           String
+  providerAccountId  String
+
+  @@unique([provider, providerAccountId]) // <--- Aqui!
+}
+
+```
+
+O que isso significa na prática? **A combinação do Provedor + ID do Provedor tem que ser única.**
+
+**Por que o NextAuth exige isso?**
+
+- O **`provider`** é a empresa que está fazendo o login (ex: `"google"`, `"github"`, `"facebook"`).
+- O **`providerAccountId`** é o código de identificação único que o Google deu para aquele usuário lá nos servidores deles (ex: `"1029384756"`).
+
+Imagine que você (Evaldo) fez login com o Google. O banco de dados salva a combinação: `["google", "1029384756"]`.
+Se amanhã o sistema bugar e tentar vincular essa exata mesma conta do Google de novo, o banco de dados vai bater o olho na regra `@@unique` e dizer: _"Opa! Já existe uma linha aqui onde o provedor é 'google' e o ID é '1029384756'. Não vou duplicar isso!"_
+
+Em resumo: o `@@unique` é o segurança do banco de dados que impede duplicações perigosas de combinações. Ele garante a integridade dos dados para que o NextAuth nunca confunda quem é quem na hora do login.
