@@ -1,45 +1,40 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Carregando...
+      </div>
+    );
+  }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500">
-      <h1 className="text-4xl font-bold mb-8">Gerenciador de Tarefas</h1>
-      {session ? (
-        <div className="text-center">
-          <img
-            src={session.user?.image || ""}
-            alt={session.user?.name || "profile image"}
-            width={112}
-            height={112}
-            className="rounded-full w-28 h-28 justify-center mb-4 mx-auto"
-          />
-          <p className="mb-4 text-lg">
-            Bem vindo,{" "}
-            <span className="text-sky-500">{session.user?.name}</span>!
-          </p>
-
-          <button
-            onClick={() => signOut()}
-            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
-          >
-            Sair
-          </button>
-        </div>
-      ) : (
-        <div>
-          <p>Voce não está logado</p>
-          <button
-            onClick={() => signIn()}
-            className="bg-sky-500 text-white py-2 px-4 rounded-md hover:bg-sky-600"
-          >
-            Entrar com Google
-          </button>
-        </div>
-      )}
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-500 ">
+      <div className="bg-white p-12 rounded-md shadow-lg text-center max-w-md w-full">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Gerenciador de Tarefas
+        </h1>
+        <p className="text-gray-600 text-md mb-8">Organize sua rotina</p>
+        <button
+          onClick={() => signIn("google")}
+          className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-md capitalize"
+        >
+          Entrar com Google
+        </button>
+      </div>
     </main>
   );
 }

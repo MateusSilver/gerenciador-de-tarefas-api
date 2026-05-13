@@ -8,7 +8,7 @@ const createTaskSchema = z.object({
   description: z.string().optional(),
   status: z.enum(["TODO", "IN_PROGRESS", "DONE"]).optional(),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
-  userId: z.string().min(1, "Campo obrigatório"), //retirar na fase 3
+  userEmail: z.string().email("Email inválido"), // nova regra
 });
 
 // pegar lista de tarefas
@@ -36,19 +36,33 @@ export async function POST(request: Request) {
     // validação do zod
     const result = createTaskSchema.safeParse(body);
     if (!result.success) {
+      console.log("Erro de validação zod: ", result.error.issues);
       return NextResponse.json({ error: result.error.issues }, { status: 400 });
+    }
+
+    // teste de email
+    const { title, description, status, priority, userEmail } = result.data;
+    const user = await prisma.user.findUnique({ where: { email: userEmail } });
+    if (!user) {
+      return NextResponse.json(
+        { error: "Usuário não encontrado" },
+        { status: 404 },
+      );
     }
 
     // postar tarefa
     const newTask = await prisma.task.create({
-      data: result.data,
+      data: {
+        title: title,
+        description: description,
+        status: status,
+        priority: priority,
+        userId: user.id,
+      },
     });
     return NextResponse.json(newTask, { status: 201 });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    return NextResponse.json(
-      { error: "Erro ao criar tarefa" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Erro de servidor" }, { status: 500 });
   }
 }
