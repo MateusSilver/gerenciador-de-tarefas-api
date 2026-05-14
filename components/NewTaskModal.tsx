@@ -2,6 +2,9 @@
 import { useState, SyntheticEvent } from "react";
 import { useSession } from "next-auth/react";
 
+import { Plus } from "lucide-react";
+import { Spinner } from "@/components/Spinner";
+
 interface NewTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -93,9 +96,17 @@ export function NewTaskModal({ isOpen, onClose, onSucess }: NewTaskModalProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-white bg-sky-500 hover:bg-sky-600 rounded-md font-medium transition"
+              className="px-4 py-2 text-white bg-sky-500 hover:bg-sky-600 rounded-md font-medium transition flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Criando..." : "Criar Tarefa"}
+              {isSubmitting ? (
+                <>
+                  <Spinner className="mr-2" /> Criando...
+                </>
+              ) : (
+                <>
+                  <Plus size={16} className="mr-2" /> Criar Tarefa
+                </>
+              )}
             </button>
           </div>
         </form>

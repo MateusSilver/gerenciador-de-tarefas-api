@@ -2,6 +2,9 @@
 import { useState, SyntheticEvent } from "react";
 import { type Tasktype } from "@/components/TaskCard";
 
+import { Plus } from "lucide-react";
+import { Spinner } from "@/components/Spinner";
+
 interface EditTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -122,9 +125,18 @@ export function EditTaskModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 text-white bg-sky-500 hover:bg-sky-600 rounded-md font-medium transition &&"
+              className="px-4 py-2 text-white bg-sky-500 hover:bg-sky-600 rounded-md font-medium transition flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Salvando..." : "Salvar"}
+              {isSubmitting ? (
+                <>
+                  <Spinner />
+                  Salvando...
+                </>
+              ) : (
+                <>
+                  <Plus size={16} className="mr-2" /> Salvar
+                </>
+              )}
             </button>
           </div>
         </form>

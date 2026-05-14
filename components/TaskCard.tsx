@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { EditTaskModal } from "@/components/EditTaskModal";
 
+import { SquarePen, Trash } from "lucide-react";
+
 export type Tasktype = {
   id: string;
   title: string;
@@ -74,15 +76,17 @@ export function TaskCard({ task, onTaskChanged }: TaskCardProps) {
       <div className="flex flex-col gap-2">
         <button
           onClick={() => setIsEditOpen(true)}
-          className="text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors"
+          className="text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors flex items-center"
         >
+          <SquarePen className="mr-2" size={16} />
           Editar
         </button>
         <button
           onClick={handleDelete}
           disabled={isDeleting}
-          className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
+          className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
         >
+          <Trash className="mr-2" size={16} />
           {isDeleting ? "Excluindo..." : "Excluir"}
         </button>
       </div>

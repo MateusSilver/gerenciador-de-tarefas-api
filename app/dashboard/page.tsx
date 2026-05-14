@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { TaskCard, type Tasktype } from "@/components/TaskCard";
 import { NewTaskModal } from "@/components/NewTaskModal";
 
+import { LogOut, Mail, Plus, UserCircle } from "lucide-react";
+import { Spinner } from "@/components/Spinner";
+
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -45,6 +48,7 @@ export default function Dashboard() {
   if (status == "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
+        <Spinner size={16} className="mr-2" />
         Carregando...
       </div>
     );
@@ -55,22 +59,33 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-100 p-8">
       <header className="max-w mx-auto flex flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm mb-8">
         <div className="flex items-center gap-4">
-          <img
-            src={session.user?.image || "/#"}
-            alt="Foto de perfil"
-            className="rounded-full w-12 h-12"
-          />
+          {session.user?.image ? (
+            <img
+              src={session.user.image}
+              alt="Foto de perfil"
+              className="rounded-full w-12 h-12"
+            />
+          ) : (
+            <UserCircle
+              size={48}
+              className="w-12 h-12 text-gray-400"
+              strokeWidth={1}
+            />
+          )}
           <div>
             <h2 className="text-xl font-bold capitalize text-gray-800">
               Bem vindo, {session.user?.name}
             </h2>
-            <p className="text-gray-600 text-sm">{session.user?.email}</p>
+            <p className="text-gray-600 text-sm flex items-center gap-1">
+              <Mail size={12} /> {session.user?.email}
+            </p>
           </div>
         </div>
         <button
           onClick={() => signOut()}
-          className="bg-red-500 hover:bg-red-700 text-white capitalize py-2 px-4 rounded-sm transition"
+          className="bg-red-500 hover:bg-red-700 text-white capitalize py-2 px-4 rounded-sm transition flex items-center group"
         >
+          <LogOut className="mr-2" size={16} />
           Sign Out
         </button>
       </header>
@@ -82,8 +97,9 @@ export default function Dashboard() {
             </h2>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-sky-600 text-white hover:bg-sky-700 py-2 px-4 rounded-sm transition"
+              className="bg-sky-600 text-white hover:bg-sky-700 py-2 px-4 rounded-sm transition flex items-center group"
             >
+              <Plus size={16} className="mr-2" />
               Nova Tarefa
             </button>
           </div>
