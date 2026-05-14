@@ -7,7 +7,9 @@ import { TaskCard, type Tasktype } from "@/components/TaskCard";
 import { NewTaskModal } from "@/components/NewTaskModal";
 
 import { LogOut, Mail, Plus, UserCircle } from "lucide-react";
+
 import { Spinner } from "@/components/Spinner";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -81,13 +83,16 @@ export default function Dashboard() {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => signOut()}
-          className="bg-red-500 hover:bg-red-700 text-white capitalize py-2 px-4 rounded-sm transition flex items-center group"
-        >
-          <LogOut className="mr-2" size={16} />
-          Sign Out
-        </button>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <button
+            onClick={() => signOut()}
+            className="bg-red-500 hover:bg-red-700 text-white capitalize py-2 px-4 rounded-sm transition flex items-center group"
+          >
+            <LogOut className="mr-2" size={16} />
+            Sign Out
+          </button>
+        </div>
       </header>
       <main className="max-w max-auto">
         <div className="bg-white p-6 rounded-lg shadow-sm min-h-[400px]">
