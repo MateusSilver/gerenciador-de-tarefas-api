@@ -35,7 +35,7 @@ export default function Dashboard() {
 
   async function fetchTasks() {
     try {
-      const response = await fetch("/api/tasks"); // chama get
+      const response = await fetch("/api/tasks", { cache: "no-store" }); // chama get
       if (!response.ok) throw new Error("falha de busca no BD");
 
       const data = await response.json();
@@ -75,9 +75,9 @@ export default function Dashboard() {
             />
           )}
           <div>
-            <h2 className="text-xl font-bold capitalize text-gray-800 dark:text-gray-200">
+            <h1 className="text-xl font-bold capitalize text-gray-800 dark:text-gray-200">
               Bem vindo, {session.user?.name}
-            </h2>
+            </h1>
             <p className="text-gray-600 dark:text-gray-200 text-sm flex items-center gap-1">
               <Mail size={12} /> {session.user?.email}
             </p>

@@ -48,7 +48,7 @@ export function TaskCard({ task, onTaskChanged }: TaskCardProps) {
   }
 
   return (
-    <div className="border border-gray-200 dark:border-gray-600 p-4 rounded-md flex justify-between items-start hover:shadow-md transition bg-gray-50 dark:bg-gray-800 gap-2 pointer-cursor-default">
+    <article className="border border-gray-200 dark:border-gray-600 p-4 rounded-md flex justify-between items-start hover:shadow-md transition bg-gray-50 dark:bg-gray-800 gap-2 pointer-cursor-default">
       <div>
         <h3 className="text-lg font-bold capitalize text-gray-800 dark:text-gray-200">
           {task.title}
@@ -100,6 +100,6 @@ export function TaskCard({ task, onTaskChanged }: TaskCardProps) {
           onSuccess={onTaskChanged}
         />
       )}
-    </div>
+    </article>
   );
 }

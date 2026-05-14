@@ -16,8 +16,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gerenciador de tarefas",
-  description: "Feito por Mateus da Silveira Batista",
+  title: "Gerenciador de tarefas com API",
+  description:
+    "Organize sua rotina de forma eficiente com nosso gerenciador de tarefas. Com API robusta, você pode criar, atualizar e excluir tarefas facilmente. Mantenha-se produtivo e no controle do seu dia a dia!",
+  keywords: [
+    "gerenciador de tarefas",
+    "API de tarefas",
+    "organização de tarefas",
+    "produtividade",
+    "controle de tarefas",
+    "aplicativo de tarefas",
+    "tarefas diárias",
+    "gerenciamento de tempo",
+    "tarefas pendentes",
+    "tarefas concluídas",
+  ],
+  authors: [
+    {
+      name: "Mateus da Silveira Batista",
+      url: "https://github.com/MateusSilver",
+    },
+  ],
+  openGraph: {
+    title: "Gerenciador de tarefas com API",
+    description:
+      "Organize sua rotina de forma eficiente com nosso gerenciador de tarefas.",
+    url: "https://gerenciador-de-tarefas-com-api.vercel.app", //trocar depois do deploy
+    siteName: "Gerenciador de tarefas com API",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1100,
+        height: 540,
+        alt: "Gerenciador de tarefas com API - Organize sua rotina de forma eficiente",
+      },
+    ],
+    locale: "pt_BR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

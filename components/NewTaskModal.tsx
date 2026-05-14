@@ -1,6 +1,5 @@
 "use client";
 import { useState, SyntheticEvent } from "react";
-import { useSession } from "next-auth/react";
 
 import { Plus } from "lucide-react";
 import { Spinner } from "@/components/Spinner";
@@ -12,8 +11,6 @@ interface NewTaskModalProps {
 }
 
 export function NewTaskModal({ isOpen, onClose, onSucess }: NewTaskModalProps) {
-  const { data: session } = useSession();
-
   // estados
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -33,9 +30,6 @@ export function NewTaskModal({ isOpen, onClose, onSucess }: NewTaskModalProps) {
         body: JSON.stringify({
           title: title,
           description: description,
-          status: "TODO",
-          priority: "MEDIUM",
-          userEmail: session?.user?.email,
         }),
       });
       if (response.ok) {
