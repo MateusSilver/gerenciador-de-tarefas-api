@@ -58,8 +58,8 @@ export default function Dashboard() {
   if (!session) return null;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <header className="max-w mx-auto flex flex-row justify-between items-center bg-white p-4 rounded-lg shadow-sm mb-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
+      <header className="max-w mx-auto flex flex-row justify-between items-center bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm mb-8">
         <div className="flex items-center gap-4">
           {session.user?.image ? (
             <img
@@ -70,15 +70,15 @@ export default function Dashboard() {
           ) : (
             <UserCircle
               size={48}
-              className="w-12 h-12 text-gray-400"
+              className="w-12 h-12 text-gray-400 dark:text-gray-100"
               strokeWidth={1}
             />
           )}
           <div>
-            <h2 className="text-xl font-bold capitalize text-gray-800">
+            <h2 className="text-xl font-bold capitalize text-gray-800 dark:text-gray-200">
               Bem vindo, {session.user?.name}
             </h2>
-            <p className="text-gray-600 text-sm flex items-center gap-1">
+            <p className="text-gray-600 dark:text-gray-200 text-sm flex items-center gap-1">
               <Mail size={12} /> {session.user?.email}
             </p>
           </div>
@@ -95,9 +95,9 @@ export default function Dashboard() {
         </div>
       </header>
       <main className="max-w max-auto">
-        <div className="bg-white p-6 rounded-lg shadow-sm min-h-[400px]">
+        <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm min-h-[400px]">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800 capitalize">
+            <h2 className="text-2xl font-bold text-gray-800 capitalize dark:text-gray-200">
               Minhas tarefas
             </h2>
             <button
@@ -111,9 +111,13 @@ export default function Dashboard() {
           <div className="mt-6 flex flex-col gap-4">
             {/* aqui onde vão ficar tarefas */}
             {isLoading ? (
-              <p className="text-gray-600 mt-4">Carregando tarefas...</p>
+              <p className="text-gray-600 dark:text-gray-200 mt-4">
+                Carregando tarefas...
+              </p>
             ) : tasks.length === 0 ? (
-              <p className="text-gray-600 mt-4">Nenhuma tarefa encontrada.</p>
+              <p className="text-gray-600 dark:text-gray-200 mt-4">
+                Nenhuma tarefa encontrada.
+              </p>
             ) : (
               tasks.map((task) => (
                 <TaskCard
