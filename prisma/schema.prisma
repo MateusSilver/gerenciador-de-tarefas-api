@@ -43,7 +43,7 @@ model Account {
 }
 
 model Session {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
   sessionToken String @unique
   userId String
   expires DateTime
@@ -58,6 +58,7 @@ model User {
   emailVerified DateTime?
   image String?
   createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
   
   tasks Task[]
   accounts Account[]
